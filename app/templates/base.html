@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>Сonstruction Social network "BUDDY"</title>> <!--отображается в адресной строке-->
+    </head>
+    <body>
+    <h1>Непонятный заголовок</h1>>
+        <div>
+            Social app:
+            <a href="{{url_for('login')}}">Login</a>
+            <a href="{{url_for('community')}}">Community</a>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>
