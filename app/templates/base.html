@@ -1,15 +1,26 @@
-<html>
-    <head>
-        <title>Сonstruction Social network "BUDDY"</title>> <!--отображается в адресной строке-->
-    </head>
-    <body>
-    <h1>Непонятный заголовок</h1>>
-        <div>
-            Social app:
-            <a href="{{url_for('login')}}">Login</a>
-            <a href="{{url_for('community')}}">Community</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Take a buddy and spend time</title>
+        <link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div id="container">
+        <div id="header">Шапка сайта</div>
+        <div id="navigation">
+            <nav>
+                <ul>
+                    <li><a href="/login">LogIn in app</a></li>>
+                    <li><a href="">Another page</a></li>>
+                </ul>
+            </nav>
         </div>
-        <hr>
+        <div id="menu"></div>
+        <div id="content"></div>
+        <div id="footer"></div>
+    </div>
+    <hr>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
@@ -20,5 +31,5 @@
         {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
-    </body>
+</body>>
 </html>
