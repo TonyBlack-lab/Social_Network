@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {{ super() }}
+
+    <p>
+        {{ is_auth }}
+    </p>
+
+{% endblock %}
+
+{% block app_content %}
+    {{ super() }}
+    <p> child </p>
+{% endblock %}

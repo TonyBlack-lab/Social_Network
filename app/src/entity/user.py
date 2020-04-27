@@ -1,16 +1,16 @@
-from app import db
+from app.src import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import login as login_form
 from flask_login import UserMixin
-# import random
+from app.src.entity import login as login_form
+from random import randint
 
 
-class Regist(UserMixin, db.Model):
-    regist_id = db.Column(db.Integer, primary_key=True)
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     mobile_number = db.Column(db.String(64), index=True, unique=True)
-    user_id_number = db.Column(db.Integer)
     email = db.Column(db.String(120), unique=True)
     password_hash = db.Column(db.String(128))
+    user_number = db.Column(db.Integer(64))
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -18,19 +18,19 @@ class Regist(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    '''def conver_id(self, regist_id, user_id_number):
-        if random.randint'''
 
     @staticmethod
-    def load_from_login(mobile_number):
-        return Regist.query.filter_by(mobile_number=mobile_number).first()
+    def load_from_user_number(user_number):
+        return User.query.filter_by(user_number=user_number).first()
 
     def __repr__(self):
-        return '<User {}>'.format(self.mobile_number)
+        return '<User {}>'.format(self.user_number)
 
 @login_form.user_loader
-def load_user(mobile_number):
-    return Regist.query.get(mobile_number)
+def load_user(user_number):
+    return User.query.get(user_number)
+
+
 
 '''
 class Gender(db.Model):
