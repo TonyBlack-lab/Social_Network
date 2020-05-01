@@ -2,15 +2,17 @@ from app.src import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app.src.entity import login as login_form
-from random import randint
+from app.src.entity.role import Permission
 
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     mobile_number = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), unique=True)
-    password_hash = db.Column(db.String(128))
-    user_number = db.Column(db.Integer(64))
+    password_hash = db.Column(db.String(64))
+    login = db.Column(db.String(120), unique=True)
+    role = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=False)
+    role_object = db.relationship('Role', back_populates='users')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -18,18 +20,23 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-
     @staticmethod
-    def load_from_user_number(user_number):
-        return User.query.filter_by(user_number=user_number).first()
+    def load_from_login(login):
+        return User.query.filter_by(login=login).first()
+
+    def can(self, permission):
+        return self.role_object is not None and (self.role_object.permissions & permission) == permission
+
+    def is_administrator(self):
+        return self.can(Permission.ADMINISTER)
 
     def __repr__(self):
-        return '<User {}>'.format(self.user_number)
+        return '<User {}>'.format(self.login)
+
 
 @login_form.user_loader
-def load_user(user_number):
-    return User.query.get(user_number)
-
+def load_user(login):
+    return User.query.get(login)
 
 
 '''

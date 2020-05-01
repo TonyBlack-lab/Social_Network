@@ -1,12 +1,12 @@
 from flask_wtf import FlaskForm
 from werkzeug.routing import ValidationError
-from wtforms import IntegerField, StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, EqualTo, Email
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, EqualTo
 from app.src.entity.user import User
 
 class RegistForm(FlaskForm):
     mobile_number = StringField('Mobile number', validators=[DataRequired()])
-    email = StringField('email', validators=[DataRequired(), Email()])
+    email = StringField('email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     rePassword = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')

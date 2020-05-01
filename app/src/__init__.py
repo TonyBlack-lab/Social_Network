@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 
 app = Flask(__name__, template_folder="../templates")
 
-app.config.form_object(config)
+app.config.from_object(config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 

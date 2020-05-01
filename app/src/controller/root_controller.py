@@ -6,8 +6,8 @@ from flask_bootstrap import Bootstrap
 
 from app.src import app, db
 from app.src.entity.user import User
-#from app.src.form.sign_in_form import SignInForm
-#from app.src.form.sign_up_form import SignUpForm
+from app.src.form.login_form import LoginForm
+from app.src.form.regist_form import RegistForm
 
 bootstrap = Bootstrap(app)
 
@@ -38,7 +38,7 @@ def login():
 
     if not current_user.is_authenticated:
         if form.validate_on_submit():
-            user = User.load_from_user_number(form.user_number.data)
+            user = User.load_from_login(form.login.data)
 
             if user is None or not user.check_password(form.password.data):
                 flash('Invalid user number or password')
